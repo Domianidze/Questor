@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@questor.com',
         ]);
 
-        Game::factory(100)->create();
+        Game::factory(250)->create();
     }
 }

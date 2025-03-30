@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('slug');
             $table->string('name');
             $table->string('cover');
-            $table->string('summary');
+            $table->text('summary');
             $table->double('rating');
             $table->integer('release_date');
             $table->timestamps();
