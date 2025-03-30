@@ -14,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::get('games', [GameController::class, 'index'])->name('games');
+    Route::get('games/{game:slug}', [GameController::class, 'show'])->name('game');
 });
 
 require __DIR__ . '/settings.php';
