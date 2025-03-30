@@ -1,6 +1,7 @@
 import { AppPagination } from '@/components/app-pagination';
+import { GameCard } from '@/components/game-card';
 import AppLayout from '@/layouts/app-layout';
-import { Game, Paginated, type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type Game, type Paginated } from '@/types';
 import { Head } from '@inertiajs/react';
 
 interface GamesProps {
@@ -18,12 +19,9 @@ export default function Games({ games }: GamesProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Games" />
-            <div className="grid grid-cols-5 gap-4 p-4">
+            <div className="grid grid-cols-[repeat(auto-fill,_minmax(15rem,_1fr))] gap-4 p-4">
                 {games.data.map((game) => (
-                    <div key={game.id} className="w-full">
-                        <img src={game.cover} alt={game.name} className="bg-sidebar h-100 w-full rounded object-cover object-center" />
-                        <p className="pt-1 text-lg">{game.name}</p>
-                    </div>
+                    <GameCard game={game} key={game.id} />
                 ))}
             </div>
             <AppPagination links={games.links} />

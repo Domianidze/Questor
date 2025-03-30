@@ -7,7 +7,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
-import { Paginated } from '@/types';
+import { type Paginated } from '@/types';
 
 interface AppNavigationProps {
     links: Paginated['links'];
