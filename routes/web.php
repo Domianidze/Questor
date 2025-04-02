@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\LibraryGameController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
+    Route::get('library', LibraryController::class)->name('library');
     Route::get('games', [GameController::class, 'index'])->name('games');
     Route::get('games/{game:slug}', [GameController::class, 'show'])->name('game');
     Route::post('games/{game:slug}/library', [LibraryGameController::class, 'store'])->name('game.library.store');

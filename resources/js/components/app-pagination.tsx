@@ -14,6 +14,10 @@ interface AppNavigationProps {
 }
 
 export function AppPagination({ links }: AppNavigationProps) {
+    if (links.length < 4) {
+        return;
+    }
+
     return (
         <Pagination className="justify-end border-t p-4">
             <PaginationContent>
