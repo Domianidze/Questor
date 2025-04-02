@@ -7,9 +7,6 @@ use Inertia\Inertia;
 
 class GameController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $games = Game::paginate(15)->onEachSide(1);
@@ -17,11 +14,10 @@ class GameController extends Controller
         return Inertia::render('games', compact('games'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Game $game)
     {
-        return Inertia::render('game', compact('game'));
+        $inLibrary = (bool) auth()->user()->games()->find($game->id);
+
+        return Inertia::render('game', compact('game', 'inLibrary'));
     }
 }

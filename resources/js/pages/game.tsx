@@ -1,12 +1,14 @@
 import { GameCover } from '@/components/game-card';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem, type Game } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 import { StarIcon } from 'lucide-react';
 import moment from 'moment';
 
 interface GamesProps {
     game: Game;
+    inLibrary: boolean;
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -20,7 +22,15 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Game({ game }: GamesProps) {
+export default function Game({ game, inLibrary }: GamesProps) {
+    const toggleInLibrary = () => {
+        const method = inLibrary ? 'delete' : 'post';
+
+        router[method](`/games/${game.slug}/library`);
+
+        router.flush('/library');
+    };
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Games" />
@@ -38,6 +48,9 @@ export default function Game({ game }: GamesProps) {
                         <p className="max-w-md">{game.summary}</p>
                         <p>{moment(game.release_date).format('LL')}</p>
                     </div>
+                    <Button variant={inLibrary ? 'destructive' : 'default'} className="mt-4" onClick={toggleInLibrary}>
+                        {inLibrary ? 'Remove from library' : 'Add to library'}
+                    </Button>
                 </div>
             </div>
         </AppLayout>
