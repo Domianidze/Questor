@@ -5,6 +5,7 @@ import { type BreadcrumbItem, type Game, type Paginated } from '@/types';
 import { Head } from '@inertiajs/react';
 
 interface GamesProps {
+    popular: Game[];
     games: Paginated<Game>;
 }
 
@@ -15,11 +16,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Games({ games }: GamesProps) {
+export default function Games({ popular, games }: GamesProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Games" />
-            <GameListing games={games.data} />
+            <GameListing heading="Popular" games={popular} />
+            <GameListing heading="Games" games={games.data} />
             <AppPagination links={games.links} />
         </AppLayout>
     );
