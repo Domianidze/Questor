@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(Game::class)->constrained();
             $table->foreignIdFor(User::class)->constrained();
+            $table->boolean('favorite')->default(false);
             $table->timestamps();
         });
     }

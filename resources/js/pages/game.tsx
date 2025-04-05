@@ -9,6 +9,7 @@ import moment from 'moment';
 interface GamesProps {
     game: Game;
     inLibrary: boolean;
+    isFavorite: boolean;
 }
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -22,11 +23,19 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function Game({ game, inLibrary }: GamesProps) {
+export default function Game({ game, inLibrary, isFavorite }: GamesProps) {
     const toggleInLibrary = () => {
         const method = inLibrary ? 'delete' : 'post';
 
-        router[method](`/games/${game.slug}/library`);
+        router[method](`/games/${game.id}/library`);
+
+        router.flush('/library');
+    };
+
+    const toggleIsFavorite = () => {
+        const method = isFavorite ? 'delete' : 'post';
+
+        router[method](`/games/${game.id}/favorite`);
 
         router.flush('/library');
     };
@@ -51,6 +60,11 @@ export default function Game({ game, inLibrary }: GamesProps) {
                     <Button variant={inLibrary ? 'destructive' : 'default'} className="mt-4" onClick={toggleInLibrary}>
                         {inLibrary ? 'Remove from library' : 'Add to library'}
                     </Button>
+                    {inLibrary && (
+                        <Button variant={isFavorite ? 'destructive' : 'default'} className="ml-4" onClick={toggleIsFavorite}>
+                            {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                        </Button>
+                    )}
                 </div>
             </div>
         </AppLayout>
