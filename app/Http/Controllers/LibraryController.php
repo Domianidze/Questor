@@ -8,9 +8,10 @@ class LibraryController extends Controller
 {
     public function __invoke()
     {
-        $games = auth()->user()->games()->paginate(15);
+        $favorites = auth()->user()->games()->wherePivot('favorite', true)->get();
+        $games = auth()->user()->games()->wherePivot('favorite', false)->paginate(15);
 
-        return Inertia::render('library', compact('games'));
+        return Inertia::render('library', compact('favorites', 'games'));
     }
 }
 
