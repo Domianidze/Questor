@@ -7,6 +7,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from '@/components/ui/pagination';
+import { cn } from '@/lib/utils';
 import { type Paginated } from '@/types';
 
 interface AppNavigationProps {
@@ -32,7 +33,7 @@ export function AppPagination({ links }: AppNavigationProps) {
 
                     if (label === '...') {
                         return (
-                            <PaginationItem key={label}>
+                            <PaginationItem key={label} className="hidden lg:block">
                                 <PaginationEllipsis />
                             </PaginationItem>
                         );
@@ -47,7 +48,12 @@ export function AppPagination({ links }: AppNavigationProps) {
                     }
 
                     return (
-                        <PaginationItem key={label}>
+                        <PaginationItem
+                            key={label}
+                            className={cn({
+                                'hidden lg:block': !active,
+                            })}
+                        >
                             <PaginationLink href={url ?? ''} isActive={active}>
                                 {label}
                             </PaginationLink>
