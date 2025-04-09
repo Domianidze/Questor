@@ -25,17 +25,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Game({ game, inLibrary, isFavorite }: GamesProps) {
     const toggleInLibrary = () => {
-        const method = inLibrary ? 'delete' : 'post';
-
-        router[method](`/games/${game.id}/library`);
+        if (inLibrary) {
+            router.delete(`/games/${game.id}/library`, { preserveScroll: true });
+        } else {
+            router.post(`/games/${game.id}/library`, undefined, { preserveScroll: true });
+        }
 
         router.flush('/library');
     };
 
     const toggleIsFavorite = () => {
-        const method = isFavorite ? 'delete' : 'post';
-
-        router[method](`/games/${game.id}/favorite`);
+        if (isFavorite) {
+            router.delete(`/games/${game.id}/favorite`, { preserveScroll: true });
+        } else {
+            router.post(`/games/${game.id}/favorite`, undefined, { preserveScroll: true });
+        }
 
         router.flush('/library');
     };
@@ -43,7 +47,7 @@ export default function Game({ game, inLibrary, isFavorite }: GamesProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Games" />
-            <div className="flex gap-4 p-4">
+            <div className="flex flex-col gap-4 p-4 lg:flex-row">
                 <div className="w-80">
                     <GameCover game={game} />
                 </div>
@@ -54,17 +58,19 @@ export default function Game({ game, inLibrary, isFavorite }: GamesProps) {
                         <p>{game.rating}</p>
                     </div>
                     <div className="text-muted-foreground space-y-1 pt-3 text-sm">
-                        <p className="max-w-md">{game.summary}</p>
+                        <p className="max-w-xs lg:max-w-md">{game.summary}</p>
                         <p>{moment(game.release_date).format('LL')}</p>
                     </div>
-                    <Button variant={inLibrary ? 'destructive' : 'default'} className="mt-4" onClick={toggleInLibrary}>
-                        {inLibrary ? 'Remove from library' : 'Add to library'}
-                    </Button>
-                    {inLibrary && (
-                        <Button variant={isFavorite ? 'destructive' : 'default'} className="ml-4" onClick={toggleIsFavorite}>
-                            {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                    <div className="flex flex-col items-start gap-4 pt-4 lg:flex-row">
+                        <Button variant={inLibrary ? 'destructive' : 'default'} onClick={toggleInLibrary}>
+                            {inLibrary ? 'Remove from library' : 'Add to library'}
                         </Button>
-                    )}
+                        {inLibrary && (
+                            <Button variant={isFavorite ? 'destructive' : 'default'} onClick={toggleIsFavorite}>
+                                {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                            </Button>
+                        )}
+                    </div>
                 </div>
             </div>
         </AppLayout>
